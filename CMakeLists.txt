@@ -6,7 +6,13 @@ project(ncfw)
 
 add_library(
     ncfw STATIC
+    ncfw/src/App.cpp
+    ncfw/src/EventManager.cpp
     ncfw/src/Logger.cpp
+    ncfw/src/ProcessManager.cpp
+    ncfw/src/Property.cpp
+    ncfw/src/PropertyContainer.cpp
+    ncfw/src/PropertyProxy.cpp
 )
 
 target_include_directories(
@@ -23,4 +29,3 @@ target_link_libraries(
     ncfw_sandbox
     PUBLIC ncfw
 )
-
