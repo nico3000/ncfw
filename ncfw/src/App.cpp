@@ -33,7 +33,7 @@ int32_t App::main(const std::vector<std::string> &p_args) {
 void App::mainLoop() {
   const std::chrono::duration<float> desiredFrameTime(1.0f / 60.0f);
   auto frameBegin = std::chrono::high_resolution_clock::now();
-  while (true) {
+  while (m_continue) {
     m_processManager->update();
     auto frameEnd = std::chrono::high_resolution_clock::now();
     auto frameTime = frameEnd - frameBegin;

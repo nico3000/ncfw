@@ -10,6 +10,8 @@ public:
   Property(uint64_t p_value) : m_type(Type::eUint), m_uintValue(p_value) {}
   Property(double p_value) : m_type(Type::eDouble), m_doubleValue(p_value) {}
 
+  void setNil();
+  void set(nullptr_t p_value) { this->setNil(); }
   void set(int64_t p_value);
   void set(uint64_t p_value);
   void set(double p_value);

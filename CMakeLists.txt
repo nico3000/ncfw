@@ -6,6 +6,8 @@ project(ncfw)
 
 add_library(
     ncfw STATIC
+    ncfw/src/Actor.cpp
+    ncfw/src/ActorFactory.cpp
     ncfw/src/App.cpp
     ncfw/src/EventManager.cpp
     ncfw/src/Logger.cpp

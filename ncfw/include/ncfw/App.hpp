@@ -74,6 +74,7 @@ public:
   int32_t main(const std::vector<std::string> &p_args = {});
   Logger &getLogger() { return *m_logger; }
   ProcessManager &getProcessManager() { return *m_processManager; }
+  void discontinue() { m_continue = false; }
 
   template <typename T, typename... Args>
   std::enable_if_t<std::is_base_of_v<AppModule, T>, T *> createModule(Args... p_args) {
@@ -82,10 +83,16 @@ public:
     return dynamic_cast<T *>(m_modules.emplace(typeid(T), std::make_unique<T>(p_args...)).first->second.get());
   }
 
+  template <typename T> std::enable_if_t<std::is_base_of_v<AppModule, T>, T *> getModule() const {
+    auto it = m_modules.find(typeid(T));
+    return it == m_modules.end() ? nullptr : dynamic_cast<T *>(it->second.get());
+  }
+
 private:
   std::unique_ptr<Logger> m_logger;
   std::unordered_map<std::type_index, std::unique_ptr<AppModule>> m_modules;
   ProcessManager *m_processManager;
+  bool m_continue = true;
 
   void mainLoop();
 };

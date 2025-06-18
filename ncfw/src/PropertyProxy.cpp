@@ -13,7 +13,7 @@ PropertyProxy::PropertyProxy(const PropertyContainer &p_propertyContainer, const
     : m_propertyContainer(nullptr), m_constPropertyContainer(p_propertyContainer), m_propertyName(p_propertyName) {}
 
 nullptr_t PropertyProxy::operator=(nullptr_t p_value) {
-  m_propertyContainer->removeProperty(m_propertyName);
+  m_propertyContainer->getOrCreateProperty(m_propertyName).setNil();
   return p_value;
 }
 

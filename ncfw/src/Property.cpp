@@ -5,23 +5,42 @@
 #include <stdexcept>
 
 namespace ncfw {
+void Property::setNil() {
+  m_type = Type::eNil;
+  m_intValue = 0;
+  m_uintValue = 0;
+  m_doubleValue = 0.0;
+  m_stringValue.clear();
+}
+
 void Property::set(int64_t p_value) {
   m_type = Type::eInt;
   m_intValue = p_value;
+  m_doubleValue = 0.0;
+  m_stringValue.clear();
 }
 
 void Property::set(uint64_t p_value) {
   m_type = Type::eUint;
+  m_intValue = 0;
   m_uintValue = p_value;
+  m_doubleValue = 0.0;
+  m_stringValue.clear();
 }
 
 void Property::set(double p_value) {
   m_type = Type::eDouble;
+  m_intValue = 0;
+  m_uintValue = 0;
   m_doubleValue = p_value;
+  m_stringValue.clear();
 }
 
 void Property::set(const std::string p_value) {
   m_type = Type::eString;
+  m_intValue = 0;
+  m_uintValue = 0;
+  m_doubleValue = 0.0;
   m_stringValue = p_value;
 }
 
