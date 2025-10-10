@@ -18,50 +18,50 @@
 #endif
 
 #define NCFW_INFO(_fmt, ...)                                                                                           \
-  ncfw::g_app->getLogger().log(__FILE__, __LINE__, ncfw::Logger::Severity::eInfo, std::format(_fmt, __VA_ARGS__))
+  ncfw::g_app->getLogger().log(__FILE__, __LINE__, ncfw::Logger::Severity::eInfo, std::format(_fmt, ##__VA_ARGS__))
 #define NCFW_WARN(_fmt, ...)                                                                                           \
-  ncfw::g_app->getLogger().log(__FILE__, __LINE__, ncfw::Logger::Severity::eWarning, std::format(_fmt, __VA_ARGS__))
+  ncfw::g_app->getLogger().log(__FILE__, __LINE__, ncfw::Logger::Severity::eWarning, std::format(_fmt, ##__VA_ARGS__))
 #define NCFW_ERROR(_fmt, ...)                                                                                          \
-  ncfw::g_app->getLogger().log(__FILE__, __LINE__, ncfw::Logger::Severity::eError, std::format(_fmt, __VA_ARGS__))
+  ncfw::g_app->getLogger().log(__FILE__, __LINE__, ncfw::Logger::Severity::eError, std::format(_fmt, ##__VA_ARGS__))
 #define NCFW_FATAL(_fmt, ...)                                                                                          \
-  ncfw::g_app->getLogger().log(__FILE__, __LINE__, ncfw::Logger::Severity::eFatal, std::format(_fmt, __VA_ARGS__))
+  ncfw::g_app->getLogger().log(__FILE__, __LINE__, ncfw::Logger::Severity::eFatal, std::format(_fmt, ##__VA_ARGS__))
 
 #define NCFW_INFO_IF(_cond, _fmt, ...)                                                                                 \
   do {                                                                                                                 \
     if (_cond) {                                                                                                       \
-      NCFW_INFO(_fmt, __VA_ARGS__);                                                                                    \
+      NCFW_INFO(_fmt, ##__VA_ARGS__);                                                                                  \
     }                                                                                                                  \
   } while (0)
 
 #define NCFW_WARN_IF(_cond, _fmt, ...)                                                                                 \
   do {                                                                                                                 \
     if (_cond) {                                                                                                       \
-      NCFW_WARN(_fmt, __VA_ARGS__);                                                                                    \
+      NCFW_WARN(_fmt, ##__VA_ARGS__);                                                                                  \
     }                                                                                                                  \
   } while (0)
 
 #define NCFW_ERROR_IF(_cond, _fmt, ...)                                                                                \
   do {                                                                                                                 \
     if (_cond) {                                                                                                       \
-      NCFW_ERROR(_fmt, __VA_ARGS__);                                                                                   \
+      NCFW_ERROR(_fmt, ##__VA_ARGS__);                                                                                 \
     }                                                                                                                  \
   } while (0)
 
 #define NCFW_THROW_IF(_cond, _fmt, ...)                                                                                \
   do {                                                                                                                 \
     if (_cond) {                                                                                                       \
-      NCFW_FATAL(_fmt, __VA_ARGS__);                                                                                   \
+      NCFW_FATAL(_fmt, ##__VA_ARGS__);                                                                                 \
       ncfw::g_app->getLogger().flushLogFile();                                                                         \
       NCFW_BREAK();                                                                                                    \
-      throw ncfw::Exception(std::format(_fmt, __VA_ARGS__));                                                           \
+      throw ncfw::Exception(std::format(_fmt, ##__VA_ARGS__));                                                         \
       exit(1);                                                                                                         \
     }                                                                                                                  \
   } while (0)
 
-#define NCFW_INFO_UNLESS(_cond, _fmt, ...) NCFW_INFO_IF(!(_cond), _fmt, __VA_ARGS__)
-#define NCFW_WARN_UNLESS(_cond, _fmt, ...) NCFW_WARN_IF(!(_cond), _fmt, __VA_ARGS__)
-#define NCFW_ERROR_UNLESS(_cond, _fmt, ...) NCFW_ERROR_IF(!(_cond), _fmt, __VA_ARGS__)
-#define NCFW_THROW_UNLESS(_cond, _fmt, ...) NCFW_THROW_IF(!(_cond), _fmt, __VA_ARGS__)
+#define NCFW_INFO_UNLESS(_cond, _fmt, ...) NCFW_INFO_IF(!(_cond), _fmt, ##__VA_ARGS__)
+#define NCFW_WARN_UNLESS(_cond, _fmt, ...) NCFW_WARN_IF(!(_cond), _fmt, ##__VA_ARGS__)
+#define NCFW_ERROR_UNLESS(_cond, _fmt, ...) NCFW_ERROR_IF(!(_cond), _fmt, ##__VA_ARGS__)
+#define NCFW_THROW_UNLESS(_cond, _fmt, ...) NCFW_THROW_IF(!(_cond), _fmt, ##__VA_ARGS__)
 
 namespace ncfw {
 extern class App *g_app;

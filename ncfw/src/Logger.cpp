@@ -1,6 +1,7 @@
 #include "ncfw/Logger.hpp"
 
 #include <filesystem>
+#include <format>
 #include <iostream>
 #include <regex>
 

@@ -22,13 +22,13 @@ template <uint32_t N, typename T> struct Vector {
   float length() const
     requires(std::is_same_v<T, float>)
   {
-    return std::sqrtf(this->dot(*this));
+    return std::sqrt(this->dot(*this));
   }
 
   double length() const
     requires(!std::is_same_v<T, float>)
   {
-    return std::sqrt((double)this->dot(*this));
+    return std::sqrt(static_cast<double>(this->dot(*this)));
   }
 };
 
@@ -65,13 +65,13 @@ template <typename T> struct Vector<2, T> {
   float length() const
     requires(std::is_same_v<T, float>)
   {
-    return std::sqrtf(this->dot(*this));
+    return std::sqrt(this->dot(*this));
   }
 
   double length() const
     requires(!std::is_same_v<T, float>)
   {
-    return std::sqrt((double)this->dot(*this));
+    return std::sqrt(static_cast<double>(this->dot(*this)));
   }
 };
 
@@ -107,13 +107,13 @@ template <typename T> struct Vector<3, T> {
   float length() const
     requires(std::is_same_v<T, float>)
   {
-    return std::sqrtf(this->dot(*this));
+    return std::sqrt(this->dot(*this));
   }
 
   double length() const
     requires(!std::is_same_v<T, float>)
   {
-    return std::sqrt((double)this->dot(*this));
+    return std::sqrt(static_cast<double>(this->dot(*this)));
   }
 };
 
@@ -148,7 +148,7 @@ template <typename T> struct Vector<4, T> {
   float length() const
     requires(std::is_same_v<T, float>)
   {
-    return std::sqrtf(this->dot(*this));
+    return std::sqrt(this->dot(*this));
   }
 
   double length() const
