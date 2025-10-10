@@ -4,7 +4,6 @@
 #include "ncfw/EventSystem/EventListener.hpp"
 #include "ncfw/EventSystem/EventListenerCallbackHandle.hpp"
 #include "ncfw/EventSystem/UniversalEventListener.hpp"
-#include "ncfw/EventSystem/UniversalEventListenerCallbackHandle.hpp"
 #include "ncfw/ProcessSystem/Process.hpp"
 
 #include <functional>
@@ -16,34 +15,30 @@ namespace ncfw {
 class EventManager : public AppModule, public Process {
 public:
   typedef std::function<void(const Event &)> UniversalEventListenerCallback;
-  template <typename T, typename = std::enable_if_t<std::is_base_of_v<Event, T>>>
-  using EventListenerCallback = std::function<void(const T &)>;
+  template <ExplicitEvent E> using EventListenerCallback = std::function<void(const E &)>;
 
   void addListener(const std::string &p_evtName, UniversalEventListener *p_listener);
   UniversalEventListener *addListener(const std::string &p_evtName, const UniversalEventListenerCallback &p_callback);
   void removeListener(const std::string &p_evtName, UniversalEventListener *p_listener);
   Status update() override;
 
-  template <typename T, typename = std::enable_if_t<std::is_base_of_v<Event, T>>>
-  void addListener(EventListener<T> *p_listener) {
-    m_listeners[typeid(T)].emplace_back(p_listener);
+  template <ExplicitEvent E> void addListener(EventListener<E> *p_listener) {
+    m_listeners[typeid(E)].emplace_back(p_listener);
     this->addRefIfOwned(p_listener);
   }
 
-  template <typename T, typename = std::enable_if_t<std::is_base_of_v<Event, T>>>
-  void removeListener(EventListener<T> *p_listener) {
-    this->removeListener(typeid(T), p_listener);
+  template <ExplicitEvent E> void removeListener(EventListener<E> *p_listener) {
+    this->removeListener(typeid(E), p_listener);
   }
 
-  template <typename T, typename = std::enable_if_t<std::is_base_of_v<Event, T>>>
-  EventListener<T> *addListener(const EventListenerCallback<T> &p_callback) {
-    auto listener = std::make_unique<EventListenerCallbackHandle<T>>(p_callback);
+  template <ExplicitEvent E> EventListener<E> *addListener(const EventListenerCallback<E> &p_callback) {
+    auto listener = std::make_unique<EventListenerCallbackHandle<E>>(p_callback);
     this->addListener(listener.get());
-    return dynamic_cast<EventListener<T> *>(this->registerOwned(std::move(listener)));
+    return dynamic_cast<EventListener<E> *>(this->registerOwned(std::move(listener)));
   }
 
-  template <typename T, typename... Args> std::enable_if_t<std::is_base_of_v<Event, T>, void> pushNew(Args... p_args) {
-    EventInfo evtInfo = {.evtType = typeid(T), .evt = std::make_unique<T>(p_args...)};
+  template <ExplicitEvent E, typename... Args> void pushNew(Args... p_args) {
+    EventInfo evtInfo = {.evtType = typeid(E), .evt = std::make_unique<E>(p_args...)};
     m_eventQueues[m_currentQueueIdx].emplace_back(std::move(evtInfo));
   }
 

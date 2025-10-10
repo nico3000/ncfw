@@ -4,6 +4,8 @@
 namespace ncfw {
 class UniversalEventListener {
 public:
+  virtual ~UniversalEventListener() = default;
+
   virtual void on(const Event &p_evt) = 0;
 };
 } // namespace ncfw

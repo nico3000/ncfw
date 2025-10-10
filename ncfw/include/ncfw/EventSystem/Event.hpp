@@ -12,4 +12,7 @@ public:
 private:
   std::string m_eventName;
 };
+
+template <typename T>
+concept ExplicitEvent = std::is_base_of_v<Event, T>;
 } // namespace ncfw

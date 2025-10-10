@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <type_traits>
 
 namespace ncfw {
 class PropertyContainer;
@@ -25,17 +26,26 @@ public:
   double operator=(double p_value);
   const std::string &operator=(const std::string &p_value);
 
-  template <typename T> std::enable_if_t<!std::is_floating_point_v<T> && std::is_signed_v<T>, T> operator=(T p_value) {
+  template <typename T>
+  T operator=(T p_value)
+    requires(std::is_integral_v<T> && std::is_signed_v<T>)
+  {
     this->operator=(static_cast<int64_t>(p_value));
     return p_value;
   }
 
-  template <typename T> std::enable_if_t<std::is_unsigned_v<T>, T> operator=(T p_value) {
+  template <typename T>
+  T operator=(T p_value)
+    requires(std::is_unsigned_v<T>)
+  {
     this->operator=(static_cast<uint64_t>(p_value));
     return p_value;
   }
 
-  template <typename T> std::enable_if_t<std::is_floating_point_v<T>, T> operator=(T p_value) {
+  template <typename T>
+  T operator=(T p_value)
+    requires(std::is_floating_point_v<T>)
+  {
     this->operator=(static_cast<double>(p_value));
     return p_value;
   }

@@ -4,14 +4,13 @@
 #include <functional>
 
 namespace ncfw {
-template <typename T, typename = std::enable_if_t<std::is_base_of_v<Event, T>>>
-class EventListenerCallbackHandle : public EventListener<T> {
+template <ExplicitEvent E> class EventListenerCallbackHandle : public EventListener<E> {
 public:
-  EventListenerCallbackHandle(const std::function<void(const T &)> &p_callback) : m_callback(p_callback) {}
+  EventListenerCallbackHandle(const std::function<void(const E &)> &p_callback) : m_callback(p_callback) {}
 
-  void on(const T &p_evt) override { m_callback(p_evt); }
+  void on(const E &p_evt) override { m_callback(p_evt); }
 
 private:
-  std::function<void(const T &)> m_callback;
+  std::function<void(const E &)> m_callback;
 };
 } // namespace ncfw

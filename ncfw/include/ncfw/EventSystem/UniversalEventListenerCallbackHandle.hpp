@@ -1,5 +1,5 @@
 #pragma once
-#include "ncfw/EventSystem/EventListener.hpp"
+#include "ncfw/EventSystem/UniversalEventListener.hpp"
 
 #include <functional>
 

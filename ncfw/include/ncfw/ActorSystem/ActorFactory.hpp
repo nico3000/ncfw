@@ -3,7 +3,6 @@
 #include "ncfw/ActorSystem/ActorId.hpp"
 #include "ncfw/AppModule.hpp"
 
-#include <memory>
 #include <string>
 
 namespace ncfw {

@@ -77,13 +77,18 @@ public:
   void discontinue() { m_continue = false; }
 
   template <typename T, typename... Args>
-  std::enable_if_t<std::is_base_of_v<AppModule, T>, T *> createModule(Args... p_args) {
+  T *createModule(Args... p_args)
+    requires(std::is_base_of_v<AppModule, T>)
+  {
     NCFW_THROW_UNLESS(m_modules.find(typeid(T)) == m_modules.end(), "App module {} was already created.",
                       typeid(T).name());
     return dynamic_cast<T *>(m_modules.emplace(typeid(T), std::make_unique<T>(p_args...)).first->second.get());
   }
 
-  template <typename T> std::enable_if_t<std::is_base_of_v<AppModule, T>, T *> getModule() const {
+  template <typename T>
+  T *getModule() const
+    requires(std::is_base_of_v<AppModule, T>)
+  {
     auto it = m_modules.find(typeid(T));
     return it == m_modules.end() ? nullptr : dynamic_cast<T *>(it->second.get());
   }

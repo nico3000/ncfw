@@ -1,4 +1,3 @@
-#pragma once
 #include "ncfw/PropertySystem/PropertyProxy.hpp"
 
 #include "ncfw/App.hpp"

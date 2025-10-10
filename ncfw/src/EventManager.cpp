@@ -1,4 +1,5 @@
 #include "ncfw/EventSystem/EventManager.hpp"
+#include "ncfw/EventSystem/UniversalEventListenerCallbackHandle.hpp"
 
 namespace ncfw {
 void EventManager::addListener(const std::string &p_evtName, UniversalEventListener *p_listener) {
