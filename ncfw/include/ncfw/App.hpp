@@ -82,7 +82,8 @@ public:
   {
     NCFW_THROW_UNLESS(m_modules.find(typeid(T)) == m_modules.end(), "App module {} was already created.",
                       typeid(T).name());
-    return dynamic_cast<T *>(m_modules.emplace(typeid(T), std::make_unique<T>(p_args...)).first->second.get());
+    return static_cast<T *>(
+        m_modules.emplace(typeid(T), std::make_unique<T>(std::forward<Args>(p_args)...)).first->second.get());
   }
 
   template <typename T>

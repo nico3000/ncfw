@@ -1,0 +1,46 @@
+{
+    "version": 10,
+    "cmakeMinimumRequired": {
+        "major": 3,
+        "minor": 23
+    },
+    "configurePresets": [
+        {
+            "name": "vcpkg-base",
+            "hidden": true,
+            "generator": "Ninja",
+            "binaryDir": "${sourceDir}/build",
+            "cacheVariables": {
+                "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/ext/vcpkg/scripts/buildsystems/vcpkg.cmake"
+            }
+        },
+        {
+            "name": "windows-clang",
+            "inherits": "vcpkg-base",
+            "cacheVariables": {
+                "CMAKE_C_COMPILER": "clang-cl.exe",
+                "CMAKE_CXX_COMPILER": "clang-cl.exe"
+            }
+        }
+    ],
+    "buildPresets": [
+        {
+            "name": "windows-clang-Debug",
+            "configurePreset": "windows-clang",
+            "displayName": "Debug",
+            "configuration": "Debug"
+        },
+        {
+            "name": "windows-clang-RelWithDebInfo",
+            "configurePreset": "windows-clang",
+            "displayName": "RelWithDebInfo",
+            "configuration": "RelWithDebInfo"
+        },
+        {
+            "name": "windows-clang-Release",
+            "configurePreset": "windows-clang",
+            "displayName": "Release",
+            "configuration": "Release"
+        }
+    ]
+}

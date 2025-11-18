@@ -34,7 +34,7 @@ public:
   template <ExplicitEvent E> EventListener<E> *addListener(const EventListenerCallback<E> &p_callback) {
     auto listener = std::make_unique<EventListenerCallbackHandle<E>>(p_callback);
     this->addListener(listener.get());
-    return dynamic_cast<EventListener<E> *>(this->registerOwned(std::move(listener)));
+    return static_cast<EventListener<E> *>(this->registerOwned(std::move(listener)));
   }
 
   template <ExplicitEvent E, typename... Args> void pushNew(Args... p_args) {
